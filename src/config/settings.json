@@ -1,0 +1,4 @@
+{
+  "apiURL_production": "https://orpheu-api.herokuapp.com/api",
+  "apiURL": "http://localhost:3500/api"
+}
