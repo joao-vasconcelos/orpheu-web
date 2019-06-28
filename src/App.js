@@ -29,16 +29,19 @@ import Authors from "./components/sections/authors/display/DisplayAuthors";
 import ViewAuthor from "./components/sections/authors/view/ViewAuthor";
 import CreateAuthor from "./components/sections/authors/create/CreateAuthor";
 import EditAuthor from "./components/sections/authors/edit/EditAuthor";
-import DeleteAuthor from "./components/sections/authors/edit/DeleteAuthor";
 
 import CreateGenre from "./components/sections/genres/create/CreateGenre";
 import EditGenre from "./components/sections/genres/edit/EditGenre";
 import ViewGenre from "./components/sections/genres/view/ViewGenre";
 import DisplayGenres from "./components/sections/genres/display/DisplayGenres";
 
-import "./App.css";
 import authService from "./services/authService";
-import NotFound from "./components/common/NotFound";
+import NotFound from "./components/common/display/NotFound";
+
+import "./App.css";
+import "./styles/shadows.css";
+import "./styles/animate.css";
+import "./styles/grow.css";
 
 class App extends Component {
   state = {
@@ -60,18 +63,18 @@ class App extends Component {
           <Route path="/logout" component={Logout} />
 
           {/* AUTHENTICATED */}
+          {/* <Route path="/books/edit/:id" component={EditBook} /> */}
           <Route path="/books/new" component={CreateBook} />
           <Route path="/books/:id" component={ViewBook} />
           <Route path="/books" component={Books} />
 
-          <Route path="/authors/delete/:id" component={DeleteAuthor} />
-          <Route path="/authors/edit/new" component={CreateAuthor} />
           <Route path="/authors/edit/:id" component={EditAuthor} />
+          <Route path="/authors/new" component={CreateAuthor} />
           <Route path="/authors/:id" component={ViewAuthor} />
           <Route path="/authors" component={Authors} />
 
-          <Route path="/genres/edit/new" component={CreateGenre} />
           <Route path="/genres/edit/:id" component={EditGenre} />
+          <Route path="/genres/new" component={CreateGenre} />
           <Route path="/genres/:id" component={ViewGenre} />
           <Route path="/genres" component={DisplayGenres} />
 

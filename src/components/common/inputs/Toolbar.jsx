@@ -18,7 +18,9 @@ const Toolbar = ({ results, label, sortOptions = [] }) => {
           <LinkContainer to="/authors/new">
             <Dropdown.Item>Author</Dropdown.Item>
           </LinkContainer>
-          <Dropdown.Item>Genre</Dropdown.Item>
+          <LinkContainer to="/genres/new">
+            <Dropdown.Item>Genre</Dropdown.Item>
+          </LinkContainer>
         </DropdownButton>
       </ButtonGroup>
       {sortOptions.length !== 0 && (

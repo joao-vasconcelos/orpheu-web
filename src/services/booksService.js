@@ -11,6 +11,10 @@ function getByID(id) {
   return http.get(apiEndpoint + "/" + id);
 }
 
+function filter(key, value) {
+  return http.get(apiEndpoint + "/filter/" + key + "/" + value);
+}
+
 function create(item) {
   return http.post(apiEndpoint + "/", item);
 }
@@ -18,5 +22,6 @@ function create(item) {
 export default {
   get,
   getByID,
+  filter,
   create
 };

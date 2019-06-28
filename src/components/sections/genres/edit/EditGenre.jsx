@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Row, Col, Jumbotron } from "react-bootstrap";
+import { Row, Col, Jumbotron } from "react-bootstrap";
 import EditGenreFormController from "./EditGenreFormController";
 import Navigation from "../../../nav/Navigation";
 import FormCard from "../../../common/forms/FormCard";
@@ -12,11 +12,7 @@ const EditGenre = ({ match }) => {
         <Col>
           <Jumbotron className="bg-light text-dark">
             <h1>Instructions</h1>
-            <p>
-              Have you looked for specific books but did not find them anywhere?
-              Start here and you will!
-            </p>
-            <Button variant="outline-light">Login</Button>
+            <p>Edit this genre.</p>
           </Jumbotron>
         </Col>
         <Col>

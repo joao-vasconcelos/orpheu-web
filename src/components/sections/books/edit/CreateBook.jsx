@@ -1,8 +1,8 @@
 import React from "react";
 import { Button, Row, Col, Jumbotron } from "react-bootstrap";
 import CreateBookFormController from "./CreateBookFormController";
-import Navigation from "../../nav/Navigation";
-import FormCard from "../../common/forms/FormCard";
+import Navigation from "../../../nav/Navigation";
+import FormCard from "../../../common/forms/FormCard";
 
 const CreateBook = () => {
   return (

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Row, Col } from "react-bootstrap";
 
-import BrandHeader from "../../nav/BrandHeader";
-import auth from "../../../services/authService";
+import BrandHeader from "../../../nav/BrandHeader";
+import authService from "../../../../services/authService";
 import LogoutSuccessCard from "./LogoutSuccessCard";
 import LogoutErrorCard from "./LogoutErrorCard";
 
@@ -10,7 +10,7 @@ class Logout extends Component {
   state = { userName: "" };
 
   componentDidMount() {
-    const name = auth.getUserName();
+    const name = authService.getUserName();
     this.setState({ userName: name });
   }
 

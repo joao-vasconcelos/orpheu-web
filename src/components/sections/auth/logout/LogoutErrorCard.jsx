@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import auth from "../../../services/authService";
+import authService from "../../../../services/authService";
 
 const LogoutErrorCard = ({ userName }) => {
   return (
@@ -13,7 +13,7 @@ const LogoutErrorCard = ({ userName }) => {
         <Button
           variant="light"
           onClick={() => {
-            auth.logout();
+            authService.logout();
             window.location = "/logout";
           }}
         >

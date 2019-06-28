@@ -1,6 +1,6 @@
 import React from "react";
 import Fuse from "fuse.js";
-import logger from "../../../services/logService";
+import logger from "../../../utils/logger";
 
 class Grid extends React.Component {
   state = {

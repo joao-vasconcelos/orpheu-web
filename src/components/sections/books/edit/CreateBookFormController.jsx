@@ -1,9 +1,9 @@
 import React from "react";
 import Joi from "joi-browser";
 import _ from "lodash";
-import Form from "../../common/forms/Form";
-import booksService from "../../../services/booksService";
-import authorsService from "../../../services/authorsService";
+import Form from "../../../common/forms/Form";
+import booksService from "../../../../services/booksService";
+import authorsService from "../../../../services/authorsService";
 
 class CreateBookFormController extends Form {
   state = {

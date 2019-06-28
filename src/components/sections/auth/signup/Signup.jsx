@@ -1,8 +1,8 @@
 import React from "react";
 import { Button, Row, Col, Jumbotron } from "react-bootstrap";
 import SignupFormController from "./SignupFormController";
-import BrandHeader from "../../nav/BrandHeader";
-import FormCard from "../../common/forms/FormCard";
+import BrandHeader from "../../../nav/BrandHeader";
+import FormCard from "../../../common/forms/FormCard";
 
 const Signup = () => {
   return (

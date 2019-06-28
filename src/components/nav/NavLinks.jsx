@@ -11,7 +11,12 @@ const NavLinks = () => {
         </Button>
       </LinkContainer>
       <LinkContainer to="/authors">
-        <Button variant="link">Authors</Button>
+        <Button variant="link" className="mr-2">
+          Authors
+        </Button>
+      </LinkContainer>
+      <LinkContainer to="/genres">
+        <Button variant="link">Genres</Button>
       </LinkContainer>
     </React.Fragment>
   );

@@ -1,5 +1,5 @@
 import axios from "axios";
-import logger from "./logService";
+import logger from "../utils/logger";
 
 axios.interceptors.response.use(null, error => {
   const expectedError =

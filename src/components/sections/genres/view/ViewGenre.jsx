@@ -1,7 +1,7 @@
 import React from "react";
-import ViewItem from "../../common/display/ViewItem";
+import ViewItem from "../../../common/display/ViewItem";
 
-import genresService from "../../../services/genresService";
+import genresService from "../../../../services/genresService";
 
 import Navigation from "../../../nav/Navigation";
 import Loading from "../../../common/display/Loading";
@@ -10,7 +10,7 @@ import ErrorDialog from "../../../common/display/ErrorDialog";
 
 class ViewGenre extends ViewItem {
   state = {
-    item: null,
+    data: null,
     error: null
   };
 
@@ -20,12 +20,13 @@ class ViewGenre extends ViewItem {
   }
 
   render() {
-    const { item, error } = this.state;
+    const { data, error } = this.state;
     return (
       <React.Fragment>
         <Navigation />
-        {!item && !error && <Loading />}
-        {item && !error && <GenreDetails item={item} />}
+        {!data && !error && <Loading />}
+        {data && !error && <GenreDetails item={data} />}
+        {data && !error && <h5>Comming Soon...</h5>}
         {error && <ErrorDialog error={error} />}
       </React.Fragment>
     );

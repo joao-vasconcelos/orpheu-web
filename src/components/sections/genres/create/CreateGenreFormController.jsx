@@ -1,79 +1,47 @@
 import React from "react";
+import CreateItem from "../../../common/forms/CreateItem";
 import Joi from "joi-browser";
-import Form from "../../../common/forms/Form";
-import genresService from "../../../services/genresService";
+import genresService from "../../../../services/genresService";
+import Button from "../../../common/inputs/Button";
 
-class CreateGenreFormController extends Form {
+class CreateGenreFormController extends CreateItem {
   state = {
+    type: "genre",
     data: {
-      name: "",
-      nationality: "",
-      birthdate: "",
-      deathdate: "",
-      biography: ""
+      coverURL: "https://picsum.photos/100/100",
+      title: "",
+      description: ""
+    },
+    schema: {
+      coverURL: Joi.string()
+        .max(255)
+        .label("CoverURL"),
+      title: Joi.string()
+        .min(2)
+        .max(15)
+        .required()
+        .label("Title"),
+      description: Joi.string()
+        .max(1500)
+        .allow("")
+        .label("Description")
     },
     validationErrors: {},
     error: null,
     success: null
   };
 
-  schema = {
-    name: Joi.string()
-      .min(2)
-      .max(50)
-      .required()
-      .label("Name"),
-    nationality: Joi.string()
-      .min(2)
-      .max(25)
-      .required()
-      .label("Nationality"),
-    birthdate: Joi.date()
-      .max("now")
-      .iso()
-      .required()
-      .label("Birth date"),
-    deathdate: Joi.date()
-      .max("now")
-      .iso()
-      .allow("")
-      .label("Death date"),
-    biography: Joi.string()
-      .max(1000)
-      .allow("")
-      .label("Biography")
-  };
-
-  async doSubmit() {
-    try {
-      const response = await authorsService.post(this.state.data);
-      this.setState({
-        success: `Author "${response.data.name}" has been created!`
-      });
-      // window.location = response.data._id;
-    } catch (err) {
-      console.log(err);
-      this.setState({ error: err.response.data });
-    }
+  sendData() {
+    return genresService.post(this.state.data);
   }
 
-  render() {
-    const { error, success } = this.state;
+  renderForm() {
     return (
       <React.Fragment>
-        {error && <div className="alert alert-danger rounded-4">{error}</div>}
-        {success && !error && (
-          <div className="alert alert-success rounded-4">{success}</div>
-        )}
-        <form onSubmit={this.handleSubmit}>
-          {this.renderInput("name", "Author's Name")}
-          {this.renderInput("nationality", "Author's Nationality")}
-          {this.renderInput("birthdate", "Author's Birth date", "", "date")}
-          {this.renderInput("deathdate", "Author's Death date", "", "date")}
-          {this.renderTextarea("biography", "Author's Biography")}
-          <button className="btn btn-lg btn-primary btn-block mt-3">
-            Create Genre
-          </button>
+        <form onSubmit={this.prepareFormSubmission}>
+          {this.renderInput("title", "Title")}
+          {this.renderTextarea("description", "Description")}
+          <Button label="Create Genre" block={true} />
         </form>
       </React.Fragment>
     );

@@ -1,14 +1,14 @@
 import React from "react";
-import Grid from "../../common/display/Grid";
+import Grid from "../../../common/display/Grid";
 
-import authorsService from "../../../services/authorsService";
+import authorsService from "../../../../services/authorsService";
 
-import Navigation from "../../nav/Navigation";
-import Loading from "../../common/display/Loading";
-import Search from "../../common/controls/Search";
-import Toolbar from "../../common/controls/Toolbar";
+import Navigation from "../../../nav/Navigation";
+import Loading from "../../../common/display/Loading";
+import Search from "../../../common/inputs/Search";
+import Toolbar from "../../../common/inputs/Toolbar";
 import AuthorsGrid from "./AuthorsGrid";
-import ErrorDialog from "../../common/display/ErrorDialog";
+import ErrorDialog from "../../../common/display/ErrorDialog";
 
 class DisplayAuthors extends Grid {
   state = {

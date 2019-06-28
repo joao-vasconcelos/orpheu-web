@@ -1,11 +1,13 @@
 import React from "react";
 import Joi from "joi-browser";
-import _ from "lodash";
-import Form from "../../../common/forms/Form";
+import EditItem from "../../../common/forms/EditItem";
 import authorsService from "../../../../services/authorsService";
 
-class EditAuthorFormController extends Form {
+import Button from "../../../common/inputs/Button";
+
+class EditAuthorFormController extends EditItem {
   state = {
+    type: "author",
     data: {
       name: "",
       nationality: "",
@@ -13,83 +15,69 @@ class EditAuthorFormController extends Form {
       deathdate: "",
       biography: ""
     },
+    schema: {
+      coverURL: Joi.string()
+        .max(255)
+        .label("CoverURL"),
+      name: Joi.string()
+        .min(2)
+        .max(50)
+        .required()
+        .label("Name"),
+      nationality: Joi.string()
+        .min(2)
+        .max(25)
+        .required()
+        .label("Nationality"),
+      birthdate: Joi.date()
+        .max("now")
+        .iso()
+        .required()
+        .label("Birth date"),
+      deathdate: Joi.date()
+        .max("now")
+        .iso()
+        .allow("")
+        .label("Death date"),
+      biography: Joi.string()
+        .max(1000)
+        .allow("")
+        .label("Biography")
+    },
     validationErrors: {},
     error: null,
     success: null
   };
 
-  schema = {
-    name: Joi.string()
-      .min(2)
-      .max(50)
-      .required()
-      .label("Name"),
-    nationality: Joi.string()
-      .min(2)
-      .max(25)
-      .required()
-      .label("Nationality"),
-    birthdate: Joi.date()
-      .max("now")
-      .iso()
-      .required()
-      .label("Birth date"),
-    deathdate: Joi.date()
-      .max("now")
-      .iso()
-      .label("Death date"),
-    biography: Joi.string()
-      .max(1000)
-      .label("Biography")
-  };
-
-  async componentDidMount() {
-    try {
-      const response = await authorsService.getByID(this.props.id);
-      this.setState({
-        data: _.merge(this.state.data, _.omit(response.data, ["_id", "__v"]))
-      });
-    } catch (err) {
-      console.log(err);
-      this.setState({ error: err.response.data });
-    }
+  getData() {
+    return authorsService.getByID(this.props.id);
   }
 
-  async doSubmit() {
-    try {
-      const response = await authorsService.put(this.props.id, this.state.data);
-      this.setState({
-        success: `Author "${response.data.name}" has been updated!`
-      });
-      //   window.location = response.data._id;
-    } catch (err) {
-      console.log(err);
-      this.setState({ error: err.response.data });
-    }
+  sendData() {
+    return authorsService.put(this.props.id, this.state.data);
   }
 
-  render() {
-    const { error, success } = this.state;
+  deleteData() {
+    return authorsService.deleteByID(this.props.id);
+  }
+
+  renderForm() {
     return (
       <React.Fragment>
-        {error && (
-          <div className="alert alert-danger rounded-4">{this.state.error}</div>
-        )}
-        {success && !error && (
-          <div className="alert alert-success rounded-4">
-            {this.state.success}
-          </div>
-        )}
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.prepareFormSubmission}>
           {this.renderInput("name", "Author's Name")}
           {this.renderInput("nationality", "Author's Nationality")}
           {this.renderInput("birthdate", "Author's Birth date", "", "date")}
           {this.renderInput("deathdate", "Author's Death date", "", "date")}
           {this.renderTextarea("biography", "Author's Biography")}
-          <button className="btn btn-lg btn-primary btn-block mt-3">
-            Update Author
-          </button>
+          <Button label="Update Author" block={true} />
         </form>
+        <Button
+          label="Delete Author"
+          variant="danger"
+          block={true}
+          onClick={() => this.handleDelete()}
+        />
       </React.Fragment>
     );
   }

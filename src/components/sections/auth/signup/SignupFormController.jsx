@@ -1,8 +1,8 @@
 import React from "react";
 import Joi from "joi-browser";
-import Form from "../../common/forms/Form";
-import usersService from "../../../services/usersService";
-import authService from "../../../services/authService";
+import Form from "../../../common/forms/Form";
+import usersService from "../../../../services/usersService";
+import authService from "../../../../services/authService";
 
 class SignupFormController extends Form {
   state = {

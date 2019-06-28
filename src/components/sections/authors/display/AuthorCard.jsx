@@ -1,24 +1,26 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
-import AuthorCardActionsController from "./AuthorCardActionsController";
+import { LinkContainer } from "react-router-bootstrap";
 
 function AuthorCard({ item }) {
   return (
-    <Card>
-      <Card.Img variant="top" src="https://picsum.photos/100/100" />
-      <Card.Body>
-        <Card.Title>{item.name}</Card.Title>
-        <Card.Subtitle className="text-muted" style={{ fontSize: 14 }}>
-          born {item.birthdate.substr(0, 10)}
-        </Card.Subtitle>
-        <Card.Text>{item.biography}</Card.Text>
-        <AuthorCardActionsController id={item._id} />
-      </Card.Body>
-
-      <Card.Footer>
-        <small className="text-muted">{item.nationality}</small>
-      </Card.Footer>
-    </Card>
+    <LinkContainer to={"/authors/" + item._id} style={{ cursor: "pointer" }}>
+      <Card className="sh-light grow animate">
+        <Card.Img variant="top" src={item.coverURL} />
+        <Card.Body>
+          <Card.Title>{item.name}</Card.Title>
+          <Card.Subtitle className="text-muted" style={{ fontSize: 14 }}>
+            born {item.birthdate}
+          </Card.Subtitle>
+          <Card.Text className="mt-2">
+            {item.biography && item.biography.substr(0, 35) + "..."}
+          </Card.Text>
+        </Card.Body>
+        <Card.Footer>
+          <small className="text-muted">{item.nationality}</small>
+        </Card.Footer>
+      </Card>
+    </LinkContainer>
   );
 }
 

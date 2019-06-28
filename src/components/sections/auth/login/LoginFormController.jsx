@@ -1,7 +1,7 @@
 import React from "react";
 import Joi from "joi-browser";
-import Form from "../../common/forms/Form";
-import authService from "../../../services/authService";
+import Form from "../../../common/forms/Form";
+import authService from "../../../../services/authService";
 
 class LoginFormController extends Form {
   state = {

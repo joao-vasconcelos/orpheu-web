@@ -5,8 +5,8 @@ import booksService from "../../../services/booksService";
 
 import Navigation from "../../nav/Navigation";
 import Loading from "../../common/display/Loading";
-import Search from "../../common/controls/Search";
-import Toolbar from "../../common/controls/Toolbar";
+import Search from "../../common/inputs/Search";
+import Toolbar from "../../common/inputs/Toolbar";
 import BooksGrid from "./display/BooksGrid";
 import ErrorDialog from "../../common/display/ErrorDialog";
 

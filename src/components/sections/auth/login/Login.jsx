@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Row, Col, Jumbotron } from "react-bootstrap";
-import BrandHeader from "../../nav/BrandHeader";
-import FormCard from "../../common/forms/FormCard";
+import BrandHeader from "../../../nav/BrandHeader";
+import FormCard from "../../../common/forms/FormCard";
 import LoginFormController from "./LoginFormController";
 
 function Login() {

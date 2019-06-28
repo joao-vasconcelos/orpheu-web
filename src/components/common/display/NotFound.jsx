@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-import Navigation from "../nav/Navigation";
+import Navigation from "../../nav/Navigation";
 
 const NotFound = ({ history }) => {
   return (

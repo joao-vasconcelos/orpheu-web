@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { Image, Row, Col } from "react-bootstrap";
-import SimpleTable from "../../common/display/SimpleTable";
+import SimpleTable from "../../../common/display/SimpleTable";
 
 const BookDetails = ({ item }) => {
   return (

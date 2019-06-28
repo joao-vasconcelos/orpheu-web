@@ -5,54 +5,33 @@
 /* * */
 
 import React from "react";
-import Joi from "joi-browser";
-import Input from "./Input";
-import Textarea from "./Textarea";
-import Select from "./Select";
-import Multiselect from "./Multiselect";
+import validation from "../../../utils/validation";
+
+import Input from "../inputs/Input";
+import Textarea from "../inputs/Textarea";
+import Select from "../inputs/Select";
+import Multiselect from "../inputs/Multiselect";
+import logger from "../../../utils/logger";
 
 class Form extends React.Component {
   state = {
     data: {},
+    schema: {},
     validationErrors: {},
     error: null,
     success: null
   };
 
-  validate = () => {
-    const options = { abortEarly: false };
-    const { error } = Joi.validate(this.state.data, this.schema, options);
-    if (!error) return null;
-
-    const validationErrors = {};
-    for (let item of error.details) {
-      validationErrors[item.path[0]] = item.message;
-    }
-    return validationErrors;
-  };
-
-  validateProperty = ({ name, value }) => {
-    const obj = { [name]: value };
-    const subSchema = { [name]: this.schema[name] };
-    const { error } = Joi.validate(obj, subSchema);
-    return error ? error.details[0].message : null;
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
-
-    // Submit only if there are no validation errors
-    const validationErrors = this.validate();
-    this.setState({ validationErrors: validationErrors || {} });
-    console.log("ValidationErrors: ", validationErrors);
-    if (validationErrors) return;
-
-    this.doSubmit();
-  };
-
-  handleChange = ({ currentTarget: input }) => {
+  /*
+   * func: HANDLE INPUT CHANGE
+   * Saves input data into this.state.
+   * Validates input data as soon as it changes.
+   * Sets validationErrors for UI display in case of error.
+   * Resets error and success messages.
+   */
+  handleInputChange = ({ currentTarget: input }) => {
     const validationErrors = { ...this.state.validationErrors };
-    const errorMessage = this.validateProperty(input);
+    const errorMessage = validation.validateInput(input, this.state.schema);
     if (errorMessage) {
       validationErrors[input.name] = errorMessage;
     } else {
@@ -65,6 +44,30 @@ class Form extends React.Component {
     this.setState({ data, validationErrors, error: null, success: null });
   };
 
+  /*
+   * func: PREPARE FORM SUBMISSION
+   * Initiates the validation dance.
+   * Sends form to submission if everything is OK.
+   */
+  prepareFormSubmission = e => {
+    // prevent default behaviour
+    e.preventDefault();
+
+    // check validation before submission
+    const result = validation.validateData(this.state.data, this.state.schema);
+    this.setState({ validationErrors: result || {} });
+    logger.log("Validation Errors", result);
+
+    // only submit if there are no validation errors
+    if (result) return;
+    else this.submitForm();
+  };
+
+  /*
+   * func: RENDER INPUT
+   * Initiates the validation dance.
+   * Sends form to submission if everything is OK.
+   */
   renderInput(name, label, autoComplete = "", type = "text") {
     return (
       <Input
@@ -74,7 +77,7 @@ class Form extends React.Component {
         type={type}
         autoComplete={autoComplete}
         value={this.state.data[name]}
-        onChange={this.handleChange}
+        onChange={this.handleInputChange}
         error={this.state.validationErrors[name]}
       />
     );
@@ -88,7 +91,7 @@ class Form extends React.Component {
         placeholder={label}
         rows={rows}
         value={this.state.data[name]}
-        onChange={this.handleChange}
+        onChange={this.handleInputChange}
         error={this.state.validationErrors[name]}
       />
     );
@@ -101,7 +104,7 @@ class Form extends React.Component {
         value={this.state.data[name]}
         label={label}
         options={options}
-        onChange={this.handleChange}
+        onChange={this.handleInputChange}
         error={this.state.validationErrors[name]}
       />
     );
@@ -114,7 +117,7 @@ class Form extends React.Component {
         value={this.state.data[name]}
         label={label}
         options={options}
-        onChange={this.handleChange}
+        onChange={this.handleInputChange}
         error={this.state.validationErrors[name]}
       />
     );

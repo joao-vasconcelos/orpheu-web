@@ -1,16 +1,16 @@
 import React from "react";
-import ViewItem from "../../common/display/ViewItem";
+import ViewItem from "../../../common/display/ViewItem";
 
-import authorsService from "../../../services/authorsService";
+import authorsService from "../../../../services/authorsService";
 
-import Navigation from "../../nav/Navigation";
-import Loading from "../../common/display/Loading";
+import Navigation from "../../../nav/Navigation";
+import Loading from "../../../common/display/Loading";
 import AuthorDetails from "./AuthorDetails";
-import ErrorDialog from "../../common/display/ErrorDialog";
+import ErrorDialog from "../../../common/display/ErrorDialog";
 
 class ViewAuthor extends ViewItem {
   state = {
-    item: null,
+    data: null,
     error: null
   };
 
@@ -20,12 +20,12 @@ class ViewAuthor extends ViewItem {
   }
 
   render() {
-    const { item, error } = this.state;
+    const { data, error } = this.state;
     return (
       <React.Fragment>
         <Navigation />
-        {!item && !error && <Loading />}
-        {item && !error && <AuthorDetails item={item} />}
+        {!data && !error && <Loading />}
+        {data && !error && <AuthorDetails item={data} />}
         {error && <ErrorDialog error={error} />}
       </React.Fragment>
     );

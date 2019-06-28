@@ -1,10 +1,12 @@
 import React from "react";
+import CreateItem from "../../../common/forms/CreateItem";
 import Joi from "joi-browser";
-import Form from "../../common/forms/Form";
-import authorsService from "../../../services/authorsService";
+import authorsService from "../../../../services/authorsService";
+import Button from "../../../common/inputs/Button";
 
-class CreateAuthorFormController extends Form {
+class CreateAuthorFormController extends CreateItem {
   state = {
+    type: "author",
     data: {
       name: "",
       nationality: "",
@@ -12,68 +14,54 @@ class CreateAuthorFormController extends Form {
       deathdate: "",
       biography: ""
     },
+    schema: {
+      coverURL: Joi.string()
+        .max(255)
+        .label("CoverURL"),
+      name: Joi.string()
+        .min(2)
+        .max(50)
+        .required()
+        .label("Name"),
+      nationality: Joi.string()
+        .min(2)
+        .max(25)
+        .required()
+        .label("Nationality"),
+      birthdate: Joi.date()
+        .max("now")
+        .iso()
+        .required()
+        .label("Birth date"),
+      deathdate: Joi.date()
+        .max("now")
+        .iso()
+        .allow("")
+        .label("Death date"),
+      biography: Joi.string()
+        .max(1000)
+        .allow("")
+        .label("Biography")
+    },
     validationErrors: {},
     error: null,
     success: null
   };
 
-  schema = {
-    name: Joi.string()
-      .min(2)
-      .max(50)
-      .required()
-      .label("Name"),
-    nationality: Joi.string()
-      .min(2)
-      .max(25)
-      .required()
-      .label("Nationality"),
-    birthdate: Joi.date()
-      .max("now")
-      .iso()
-      .required()
-      .label("Birth date"),
-    deathdate: Joi.date()
-      .max("now")
-      .iso()
-      .allow("")
-      .label("Death date"),
-    biography: Joi.string()
-      .max(1000)
-      .allow("")
-      .label("Biography")
-  };
-
-  async doSubmit() {
-    try {
-      const response = await authorsService.post(this.state.data);
-      this.setState({
-        success: `Author "${response.data.name}" has been created!`
-      });
-      // window.location = response.data._id;
-    } catch (err) {
-      console.log(err);
-      this.setState({ error: err.response.data });
-    }
+  sendData() {
+    return authorsService.post(this.state.data);
   }
 
-  render() {
-    const { error, success } = this.state;
+  renderForm() {
     return (
       <React.Fragment>
-        {error && <div className="alert alert-danger rounded-4">{error}</div>}
-        {success && !error && (
-          <div className="alert alert-success rounded-4">{success}</div>
-        )}
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.prepareFormSubmission}>
           {this.renderInput("name", "Author's Name")}
           {this.renderInput("nationality", "Author's Nationality")}
           {this.renderInput("birthdate", "Author's Birth date", "", "date")}
           {this.renderInput("deathdate", "Author's Death date", "", "date")}
           {this.renderTextarea("biography", "Author's Biography")}
-          <button className="btn btn-lg btn-primary btn-block mt-3">
-            Create Author
-          </button>
+          <Button label="Create Author" block={true} />
         </form>
       </React.Fragment>
     );

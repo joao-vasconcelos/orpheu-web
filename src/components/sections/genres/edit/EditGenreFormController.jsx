@@ -1,95 +1,63 @@
 import React from "react";
 import Joi from "joi-browser";
-import _ from "lodash";
-import Form from "../../../common/forms/Form";
+import EditItem from "../../../common/forms/EditItem";
 import genresService from "../../../../services/genresService";
 
-class EditGenreFormController extends Form {
+import Button from "../../../common/inputs/Button";
+
+class EditGenreFormController extends EditItem {
   state = {
+    type: "genre",
     data: {
-      name: "",
-      nationality: "",
-      birthdate: "",
-      deathdate: "",
-      biography: ""
+      coverURL: "",
+      title: "",
+      description: ""
+    },
+    schema: {
+      coverURL: Joi.string()
+        .max(255)
+        .label("CoverURL"),
+      title: Joi.string()
+        .min(2)
+        .max(15)
+        .required()
+        .label("Title"),
+      description: Joi.string()
+        .max(1500)
+        .allow("")
+        .label("Description")
     },
     validationErrors: {},
     error: null,
     success: null
   };
 
-  schema = {
-    name: Joi.string()
-      .min(2)
-      .max(50)
-      .required()
-      .label("Name"),
-    nationality: Joi.string()
-      .min(2)
-      .max(25)
-      .required()
-      .label("Nationality"),
-    birthdate: Joi.date()
-      .max("now")
-      .iso()
-      .required()
-      .label("Birth date"),
-    deathdate: Joi.date()
-      .max("now")
-      .iso()
-      .label("Death date"),
-    biography: Joi.string()
-      .max(1000)
-      .label("Biography")
-  };
-
-  async componentDidMount() {
-    try {
-      const response = await genresService.getByID(this.props.id);
-      this.setState({
-        data: _.merge(this.state.data, _.omit(response.data, ["_id", "__v"]))
-      });
-    } catch (err) {
-      console.log(err);
-      this.setState({ error: err.response.data });
-    }
+  getData() {
+    return genresService.getByID(this.props.id);
   }
 
-  async doSubmit() {
-    try {
-      const response = await genresService.put(this.props.id, this.state.data);
-      this.setState({
-        success: `Genre "${response.data.name}" has been updated!`
-      });
-      //   window.location = response.data._id;
-    } catch (err) {
-      console.log(err);
-      this.setState({ error: err.response.data });
-    }
+  sendData() {
+    return genresService.put(this.props.id, this.state.data);
   }
 
-  render() {
-    const { error, success } = this.state;
+  deleteData() {
+    return genresService.deleteByID(this.props.id);
+  }
+
+  renderForm() {
     return (
       <React.Fragment>
-        {error && (
-          <div className="alert alert-danger rounded-4">{this.state.error}</div>
-        )}
-        {success && !error && (
-          <div className="alert alert-success rounded-4">
-            {this.state.success}
-          </div>
-        )}
-        <form onSubmit={this.handleSubmit}>
-          {this.renderInput("name", "Author's Name")}
-          {this.renderInput("nationality", "Author's Nationality")}
-          {this.renderInput("birthdate", "Author's Birth date", "", "date")}
-          {this.renderInput("deathdate", "Author's Death date", "", "date")}
-          {this.renderTextarea("biography", "Author's Biography")}
-          <button className="btn btn-lg btn-primary btn-block mt-3">
-            Update Genre
-          </button>
+        <form onSubmit={this.prepareFormSubmission}>
+          {this.renderInput("title", "Title")}
+          {this.renderTextarea("description", "Description")}
+          <Button label="Update Genre" block={true} />
         </form>
+        <Button
+          label="Delete Genre"
+          variant="danger"
+          block={true}
+          onClick={() => this.handleDelete()}
+        />
       </React.Fragment>
     );
   }
