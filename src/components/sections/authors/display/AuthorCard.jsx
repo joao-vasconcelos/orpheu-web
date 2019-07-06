@@ -10,10 +10,12 @@ function AuthorCard({ item }) {
         <Card.Body>
           <Card.Title>{item.name}</Card.Title>
           <Card.Subtitle className="text-muted" style={{ fontSize: 14 }}>
-            born {item.birthdate}
+            {item.birthdate.substr(0, 4) +
+              // Only show deathdate if available.
+              (item.deathdate && " to " + item.deathdate.substr(0, 4))}
           </Card.Subtitle>
           <Card.Text className="mt-2">
-            {item.biography && item.biography.substr(0, 35) + "..."}
+            {item.biography && item.biography.substr(0, 100) + "..."}
           </Card.Text>
         </Card.Body>
         <Card.Footer>

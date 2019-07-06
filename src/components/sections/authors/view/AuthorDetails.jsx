@@ -37,7 +37,10 @@ const AuthorDetails = ({ item }) => {
                 items={[
                   { title: "Nationality", content: item.nationality },
                   { title: "Birthdate", content: item.birthdate },
-                  { title: "Deathdate", content: item.deathdate }
+                  item.deathdate && {
+                    title: "Deathdate",
+                    content: item.deathdate
+                  }
                 ]}
               />
             </Col>
