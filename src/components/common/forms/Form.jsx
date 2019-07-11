@@ -6,12 +6,14 @@
 
 import React from "react";
 import validation from "../../../utils/validation";
+import logger from "../../../utils/logger";
 
 import Input from "../inputs/Input";
 import Textarea from "../inputs/Textarea";
+import FilePicker from "../inputs/FilePicker";
 import Select from "../inputs/Select";
 import Multiselect from "../inputs/Multiselect";
-import logger from "../../../utils/logger";
+import Button from "../inputs/Button";
 
 class Form extends React.Component {
   state = {
@@ -56,7 +58,7 @@ class Form extends React.Component {
     // check validation before submission
     const result = validation.validateData(this.state.data, this.state.schema);
     this.setState({ validationErrors: result || {} });
-    logger.log("Validation Errors", result);
+    result && logger.log("Validation Errors", result);
 
     // only submit if there are no validation errors
     if (result) return;
@@ -64,11 +66,9 @@ class Form extends React.Component {
   };
 
   /*
-   * func: RENDER INPUT
-   * Initiates the validation dance.
-   * Sends form to submission if everything is OK.
+   * func: RENDER TEXT INPUT
    */
-  renderInput(name, label, autoComplete = "", type = "text") {
+  renderTextInput(name, label, autoComplete = "", type = "text") {
     return (
       <Input
         name={name}
@@ -83,6 +83,9 @@ class Form extends React.Component {
     );
   }
 
+  /*
+   * func: RENDER TEXT AREA
+   */
   renderTextarea(name, label, rows = 5) {
     return (
       <Textarea
@@ -97,6 +100,28 @@ class Form extends React.Component {
     );
   }
 
+  /*
+   * func: RENDER FILE PICKER
+   */
+  handleFileInputChange(input) {
+    const data = { ...this.state.data };
+    data[input.currentTarget.name] = input.target.files[0];
+    this.setState({ data });
+  }
+
+  renderFilePicker(name, label) {
+    return (
+      <FilePicker
+        name={name}
+        label={label}
+        onChange={i => this.handleFileInputChange(i)}
+      />
+    );
+  }
+
+  /*
+   * func: RENDER SELECT
+   */
   renderSelect(name, label, options) {
     return (
       <Select
@@ -110,6 +135,9 @@ class Form extends React.Component {
     );
   }
 
+  /*
+   * func: RENDER MULTISELECT
+   */
   renderMultiselect(name, label, options) {
     return (
       <Multiselect
@@ -121,6 +149,13 @@ class Form extends React.Component {
         error={this.state.validationErrors[name]}
       />
     );
+  }
+
+  /*
+   * func: RENDER SUBMIT BUTTON
+   */
+  renderSubmitButton(label, block) {
+    return <Button label={label} block={block} />;
   }
 }
 

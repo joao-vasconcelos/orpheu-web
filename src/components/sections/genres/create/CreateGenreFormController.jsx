@@ -1,21 +1,18 @@
 import React from "react";
-import CreateItem from "../../../common/forms/CreateItem";
 import Joi from "joi-browser";
+import CreateItem from "../../../common/forms/CreateItem";
 import genresService from "../../../../services/genresService";
-import Button from "../../../common/inputs/Button";
 
 class CreateGenreFormController extends CreateItem {
   state = {
     type: "genre",
     data: {
-      coverURL: "https://picsum.photos/100/100",
+      coverImage: null,
       title: "",
       description: ""
     },
     schema: {
-      coverURL: Joi.string()
-        .max(255)
-        .label("CoverURL"),
+      coverImage: Joi.any(),
       title: Joi.string()
         .min(2)
         .max(15)
@@ -31,19 +28,27 @@ class CreateGenreFormController extends CreateItem {
     success: null
   };
 
+  getFormData() {
+    const formData = new FormData();
+    formData.append("coverImage", this.state.data.coverImage);
+    formData.append("title", this.state.data.title);
+    formData.append("description", this.state.data.description);
+    return formData;
+  }
+
   sendData() {
-    return genresService.post(this.state.data);
+    const data = this.getFormData();
+    return genresService.post(data);
   }
 
   renderForm() {
     return (
-      <React.Fragment>
-        <form onSubmit={this.prepareFormSubmission}>
-          {this.renderInput("title", "Title")}
-          {this.renderTextarea("description", "Description")}
-          <Button label="Create Genre" block={true} />
-        </form>
-      </React.Fragment>
+      <form onSubmit={this.prepareFormSubmission}>
+        {this.renderFilePicker("coverImage", "Cover Image")}
+        {this.renderTextInput("title", "Title")}
+        {this.renderTextarea("description", "Description")}
+        {this.renderSubmitButton("Create Genre", true)}
+      </form>
     );
   }
 }

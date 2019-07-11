@@ -1,4 +1,5 @@
 import http from "../services/httpService";
+import axios from "axios";
 import { apiURL } from "../config/settings.json";
 
 const apiEndpoint = apiURL + "/genres";
@@ -11,12 +12,12 @@ function getByID(id) {
   return http.get(apiEndpoint + "/" + id);
 }
 
-function post(item) {
-  return http.post(apiEndpoint + "/", item);
+function post(data) {
+  return axios.post(apiEndpoint + "/", data);
 }
 
-function put(id, item) {
-  return http.put(apiEndpoint + "/" + id, item);
+function put(id, data) {
+  return http.put(apiEndpoint + "/" + id, data);
 }
 
 function deleteByID(id) {

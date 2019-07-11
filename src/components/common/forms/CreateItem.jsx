@@ -49,7 +49,7 @@ class CreateItem extends Form {
         {success && !error && (
           <Alert variant="success" data={this.state.success} />
         )}
-        {this.renderForm()}
+        <React.Fragment>{this.renderForm()}</React.Fragment>
       </React.Fragment>
     );
   }
