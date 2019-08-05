@@ -1,7 +1,7 @@
 import http from "../services/httpService";
 import { apiURL } from "../config/settings.json";
 
-const apiEndpoint = apiURL + "/authors";
+const apiEndpoint = apiURL + "authors";
 
 function get() {
   return http.get(apiEndpoint);
