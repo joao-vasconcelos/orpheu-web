@@ -70,15 +70,15 @@ class CreateBookFormController extends CreateItem {
         .allow("")
         .label("Language"),
       publisher: Joi.string()
-        .max(50)
+        .max(255)
         .allow("")
         .label("Publisher"),
       edition: Joi.string()
-        .max(50)
+        .max(255)
         .allow("")
         .label("Edition"),
       year: Joi.number()
-        .max(50)
+        .max(9999)
         .label("Year"),
       coverType: Joi.string()
         .max(50)
@@ -96,7 +96,7 @@ class CreateBookFormController extends CreateItem {
         .allow("")
         .label("Condition"),
       sinopse: Joi.string()
-        .max(50)
+        .max(500)
         .allow("")
         .label("Sinopse"),
       price: Joi.number()
@@ -106,11 +106,14 @@ class CreateBookFormController extends CreateItem {
         _id: Joi.string().required(),
         name: Joi.string()
           .required()
+          .max(255)
           .label("Store")
       }),
       status: Joi.object({
         code: Joi.number().label("Status Code"),
-        message: Joi.string().label("Status Message")
+        message: Joi.string()
+          .max(255)
+          .label("Status Message")
       }).label("Status")
     },
     validationErrors: {}
