@@ -1,7 +1,6 @@
 import http from "../services/httpService";
-import { apiURL } from "../config/settings.json";
 
-const apiEndpoint = apiURL + "books";
+const apiEndpoint = "books";
 
 function get() {
   return http.get(apiEndpoint);
