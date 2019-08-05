@@ -1,5 +1,5 @@
 import React from "react";
-import Grid from "../../../common/display/Grid";
+import Display from "../../../common/display/Display";
 
 import genresService from "../../../../services/genresService";
 
@@ -10,7 +10,7 @@ import Toolbar from "../../../common/inputs/Toolbar";
 import GenresGrid from "./GenresGrid";
 import ErrorDialog from "../../../common/display/ErrorDialog";
 
-class DisplayGenres extends Grid {
+class DisplayGenres extends Display {
   state = {
     data: null,
     error: null,

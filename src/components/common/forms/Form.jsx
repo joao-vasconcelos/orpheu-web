@@ -68,13 +68,13 @@ class Form extends React.Component {
   /*
    * func: RENDER TEXT INPUT
    */
-  renderTextInput(name, label, autoComplete = "", type = "text") {
+  renderTextInput(name, label, autoComplete = "") {
     return (
       <Input
+        type="text"
         name={name}
         label={label}
         placeholder={label}
-        type={type}
         autoComplete={autoComplete}
         value={this.state.data[name]}
         onChange={this.handleInputChange}
@@ -115,6 +115,25 @@ class Form extends React.Component {
         name={name}
         label={label}
         onChange={i => this.handleFileInputChange(i)}
+        error={this.state.validationErrors[name]}
+      />
+    );
+  }
+
+  /*
+   * func: RENDER DATE PICKER
+   */
+  renderDatePicker(name, label, autoComplete = "") {
+    return (
+      <Input
+        type="date"
+        name={name}
+        label={label}
+        placeholder={label}
+        autoComplete={autoComplete}
+        value={this.state.data[name]}
+        onChange={this.handleInputChange}
+        error={this.state.validationErrors[name]}
       />
     );
   }
@@ -138,24 +157,28 @@ class Form extends React.Component {
   /*
    * func: RENDER MULTISELECT
    */
-  renderMultiselect(name, label, options) {
+  renderMultiselect(name, label, options, keys, defaultValue) {
     return (
       <Multiselect
         name={name}
         value={this.state.data[name]}
         label={label}
         options={options}
+        keys={keys}
         onChange={this.handleInputChange}
+        defaultValue={defaultValue}
         error={this.state.validationErrors[name]}
       />
     );
   }
 
   /*
-   * func: RENDER SUBMIT BUTTON
+   * func: RENDER BUTTON Helper Method
    */
-  renderSubmitButton(label, block) {
-    return <Button label={label} block={block} />;
+  renderButton(label, block, variant, onClick) {
+    return (
+      <Button label={label} block={block} variant={variant} onClick={onClick} />
+    );
   }
 }
 

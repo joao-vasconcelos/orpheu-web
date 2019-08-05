@@ -6,7 +6,7 @@ function AuthorCard({ item }) {
   return (
     <LinkContainer to={"/authors/" + item._id} style={{ cursor: "pointer" }}>
       <Card className="sh-light grow animate">
-        <Card.Img variant="top" src={item.coverURL} />
+        <Card.Img variant="top" src={item.pictureURL} />
         <Card.Body>
           <Card.Title>{item.name}</Card.Title>
           <Card.Subtitle className="text-muted" style={{ fontSize: 14 }}>

@@ -10,7 +10,7 @@ import ErrorDialog from "../../../common/display/ErrorDialog";
 
 class ViewBook extends ViewItem {
   state = {
-    item: null,
+    data: null,
     error: null
   };
 
@@ -20,12 +20,12 @@ class ViewBook extends ViewItem {
   }
 
   render() {
-    const { item, error } = this.state;
+    const { data, error } = this.state;
     return (
       <React.Fragment>
         <Navigation />
-        {!item && !error && <Loading />}
-        {item && !error && <BookDetails item={item} />}
+        {!data && !error && <Loading />}
+        {data && !error && <BookDetails book={data} />}
         {error && <ErrorDialog error={error} />}
       </React.Fragment>
     );

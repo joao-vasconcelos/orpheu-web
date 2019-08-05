@@ -14,7 +14,9 @@ const LoggedInUserButton = ({ userName }) => {
         <Dropdown.Item>Profile</Dropdown.Item>
       </LinkContainer>
       <LinkContainer to="/wishlist">
-        <Dropdown.Item>Wishlist</Dropdown.Item>
+        <Dropdown.Item>
+          Wishlist <span className="ml-2 badge badge-primary">9</span>
+        </Dropdown.Item>
       </LinkContainer>
       <LinkContainer to="/orders">
         <Dropdown.Item>Order History</Dropdown.Item>

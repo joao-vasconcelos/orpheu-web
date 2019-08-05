@@ -1,5 +1,6 @@
 import React from "react";
 import Joi from "joi-browser";
+import parser from "../../../../utils/parser";
 import CreateItem from "../../../common/forms/CreateItem";
 import genresService from "../../../../services/genresService";
 
@@ -7,12 +8,14 @@ class CreateGenreFormController extends CreateItem {
   state = {
     type: "genre",
     data: {
-      coverImage: null,
+      picture: null,
       title: "",
       description: ""
     },
     schema: {
-      coverImage: Joi.any(),
+      picture: Joi.any()
+        .not(null)
+        .label("Cover Picture"),
       title: Joi.string()
         .min(2)
         .max(15)
@@ -23,31 +26,21 @@ class CreateGenreFormController extends CreateItem {
         .allow("")
         .label("Description")
     },
-    validationErrors: {},
-    error: null,
-    success: null
+    validationErrors: {}
   };
 
-  getFormData() {
-    const formData = new FormData();
-    formData.append("coverImage", this.state.data.coverImage);
-    formData.append("title", this.state.data.title);
-    formData.append("description", this.state.data.description);
-    return formData;
-  }
-
   sendData() {
-    const data = this.getFormData();
+    const data = parser.parseDataForMultipart(this.state.data, ["picture"]);
     return genresService.post(data);
   }
 
   renderForm() {
     return (
       <form onSubmit={this.prepareFormSubmission}>
-        {this.renderFilePicker("coverImage", "Cover Image")}
+        {this.renderFilePicker("picture", "Cover Picture")}
         {this.renderTextInput("title", "Title")}
         {this.renderTextarea("description", "Description")}
-        {this.renderSubmitButton("Create Genre", true)}
+        {this.renderButton("Create Genre", true, "primary", null)}
       </form>
     );
   }

@@ -1,14 +1,15 @@
 import React from "react";
 import Joi from "joi-browser";
+import parser from "../../../../utils/parser";
 import EditItem from "../../../common/forms/EditItem";
 import authorsService from "../../../../services/authorsService";
-
-import Button from "../../../common/inputs/Button";
 
 class EditAuthorFormController extends EditItem {
   state = {
     type: "author",
     data: {
+      picture: null,
+      pictureURL: "",
       name: "",
       nationality: "",
       birthdate: "",
@@ -16,9 +17,10 @@ class EditAuthorFormController extends EditItem {
       biography: ""
     },
     schema: {
-      coverURL: Joi.string()
+      picture: Joi.any().label("Cover Picture"),
+      pictureURL: Joi.string()
         .max(255)
-        .label("CoverURL"),
+        .label("Picture URL"),
       name: Joi.string()
         .min(2)
         .max(50)
@@ -44,9 +46,7 @@ class EditAuthorFormController extends EditItem {
         .allow("")
         .label("Biography")
     },
-    validationErrors: {},
-    error: null,
-    success: null
+    validationErrors: {}
   };
 
   getData() {
@@ -54,7 +54,13 @@ class EditAuthorFormController extends EditItem {
   }
 
   sendData() {
-    return authorsService.put(this.props.id, this.state.data);
+    const data = parser.parseDataForMultipart(
+      this.state.data,
+      ["picture"],
+      ["pictureURL"]
+    );
+
+    return authorsService.put(this.props.id, data);
   }
 
   deleteData() {
@@ -65,19 +71,17 @@ class EditAuthorFormController extends EditItem {
     return (
       <React.Fragment>
         <form onSubmit={this.prepareFormSubmission}>
-          {this.renderInput("name", "Author's Name")}
-          {this.renderInput("nationality", "Author's Nationality")}
-          {this.renderInput("birthdate", "Author's Birth date", "", "date")}
-          {this.renderInput("deathdate", "Author's Death date", "", "date")}
+          {this.renderFilePicker("picture", "Cover Picture")}
+          {this.renderTextInput("name", "Author's Name")}
+          {this.renderTextInput("nationality", "Author's Nationality")}
+          {this.renderTextInput("birthdate", "Author's Birth date", "", "date")}
+          {this.renderTextInput("deathdate", "Author's Death date", "", "date")}
           {this.renderTextarea("biography", "Author's Biography")}
-          <Button label="Update Author" block={true} />
+          {this.renderButton("Update Author", true, "primary", null)}
         </form>
-        <Button
-          label="Delete Author"
-          variant="danger"
-          block={true}
-          onClick={() => this.handleDelete()}
-        />
+        {this.renderButton("Delete Author", true, "danger", () =>
+          this.handleDelete()
+        )}
       </React.Fragment>
     );
   }

@@ -1,26 +1,26 @@
 import React from "react";
 import Display from "../../../common/display/Display";
 
-import authorsService from "../../../../services/authorsService";
+import booksService from "../../../../services/booksService";
 
 import Navigation from "../../../nav/Navigation";
 import Loading from "../../../common/display/Loading";
 import Search from "../../../common/inputs/Search";
 import Toolbar from "../../../common/inputs/Toolbar";
-import AuthorsGrid from "./AuthorsGrid";
+import BooksGrid from "./BooksGrid";
 import ErrorDialog from "../../../common/display/ErrorDialog";
 
-class DisplayAuthors extends Display {
+class DisplayBooks extends Display {
   state = {
     data: null,
     error: null,
     searchQuery: ""
   };
 
-  searchOptions = { keys: ["name"] };
+  searchOptions = { keys: ["title", "author.name"] };
 
   async getData() {
-    const { data } = await authorsService.get();
+    const { data } = await booksService.get();
     return data;
   }
 
@@ -37,10 +37,10 @@ class DisplayAuthors extends Display {
             <Search value={searchQuery} onChange={this.handleSearch} />
             <Toolbar
               results={filteredData.length}
-              label="authors"
-              sortOptions={[{ label: "Name", key: "name" }]}
+              label="books"
+              sortOptions={[{ label: "Title", key: "title" }]}
             />
-            <AuthorsGrid items={filteredData} />
+            <BooksGrid items={filteredData} />
           </React.Fragment>
         )}
         {error && <ErrorDialog error={error} />}
@@ -49,4 +49,4 @@ class DisplayAuthors extends Display {
   }
 }
 
-export default DisplayAuthors;
+export default DisplayBooks;

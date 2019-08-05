@@ -1,22 +1,12 @@
 import React from "react";
-import Button from "../../../common/inputs/Button";
 import { Image, Row, Col } from "react-bootstrap";
 import SimpleTable from "../../../common/display/SimpleTable";
+import EditThisToolbar from "../../../nav/EditThisToolbar";
 
 const AuthorDetails = ({ item }) => {
   return (
     <React.Fragment>
-      <Row className="mt-5">
-        <Col>
-          <Button
-            label="Edit author"
-            link={"/authors/edit/" + item._id}
-            variant="light"
-            size="sm"
-          />
-        </Col>
-      </Row>
-
+      <EditThisToolbar type="author" link={"/authors/edit/" + item._id} />
       <Row className="pt-3 my-3">
         <Col md={5} className="text-center">
           <Image

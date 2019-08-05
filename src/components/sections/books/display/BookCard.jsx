@@ -1,25 +1,51 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
-import BookCardActionsController from "./BookCardActionsController";
+import { LinkContainer } from "react-router-bootstrap";
 
 function BookCard({ item }) {
+  console.log("bookItem", item);
   return (
-    <Card>
-      <Card.Img variant="top" src="https://picsum.photos/200/200" />
-      <Card.Body>
-        <Card.Title>{item.title}</Card.Title>
-        <Card.Text>
-          This is a longer card with supporting text below as a natural lead-in
-          to additional content. This content is a little bit longer.
-        </Card.Text>
-        <BookCardActionsController id={item._id} />
-      </Card.Body>
-
-      <Card.Footer>
-        <small className="text-muted">{item.genre}</small>
-      </Card.Footer>
-    </Card>
+    <LinkContainer to={"/books/" + item._id} style={{ cursor: "pointer" }}>
+      <Card className="sh-light grow animate">
+        <Card.Img variant="top" src={item.pictureURL} />
+        <Card.Body>
+          <Card.Title>{item.title}</Card.Title>
+          <Card.Subtitle className="text-muted" style={{ fontSize: 14 }}>
+            {
+              // Only show deathdate if available.
+            }
+          </Card.Subtitle>
+          <Card.Text className="mt-2">
+            {/* {item.biography && item.biography.substr(0, 100) + "..."} */}
+          </Card.Text>
+        </Card.Body>
+        <Card.Footer>
+          <span className="badge badge-secondary mr-2">{item.price} €</span>
+          {/* <span className="badge badge-success">{item.status}</span> */}
+        </Card.Footer>
+      </Card>
+    </LinkContainer>
   );
 }
 
 export default BookCard;
+
+// function GenreCard({ item }) {
+//   return (
+//     <LinkContainer to={"/genres/" + item._id} style={{ cursor: "pointer" }}>
+//       <Card className="sh-light grow animate bg-light">
+//         <Card.Img variant="top" src={item.pictureURL} />
+//         <Card.Body style={{ backgroundColor: item.bgColor }}>
+//           <Card.Title
+//             className="text-center"
+//             style={{ fontSize: 30, color: item.txtColor }}
+//           >
+//             {item.title}
+//           </Card.Title>
+//         </Card.Body>
+//       </Card>
+//     </LinkContainer>
+//   );
+// }
+
+// export default GenreCard;

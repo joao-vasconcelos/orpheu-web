@@ -2,7 +2,7 @@ import http from "./httpService";
 import jwtDecode from "jwt-decode";
 import { apiURL } from "../config/settings.json";
 
-const apiEndpoint = apiURL + "/auth";
+const apiEndpoint = apiURL + "auth";
 
 function login(email, password) {
   return http.post(apiEndpoint, { email, password });

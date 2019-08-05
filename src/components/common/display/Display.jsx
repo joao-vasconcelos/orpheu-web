@@ -2,7 +2,7 @@ import React from "react";
 import Fuse from "fuse.js";
 import logger from "../../../utils/logger";
 
-class Grid extends React.Component {
+class Display extends React.Component {
   state = {
     data: null,
     error: null,
@@ -45,4 +45,4 @@ class Grid extends React.Component {
   };
 }
 
-export default Grid;
+export default Display;

@@ -1,22 +1,23 @@
 import React from "react";
 import Joi from "joi-browser";
+import parser from "../../../../utils/parser";
 import EditItem from "../../../common/forms/EditItem";
 import genresService from "../../../../services/genresService";
-
-import Button from "../../../common/inputs/Button";
 
 class EditGenreFormController extends EditItem {
   state = {
     type: "genre",
     data: {
-      coverURL: "",
+      picture: null,
+      pictureURL: "",
       title: "",
       description: ""
     },
     schema: {
-      coverURL: Joi.string()
+      picture: Joi.any().label("Cover Picture"),
+      pictureURL: Joi.string()
         .max(255)
-        .label("CoverURL"),
+        .label("Picture URL"),
       title: Joi.string()
         .min(2)
         .max(15)
@@ -27,9 +28,7 @@ class EditGenreFormController extends EditItem {
         .allow("")
         .label("Description")
     },
-    validationErrors: {},
-    error: null,
-    success: null
+    validationErrors: {}
   };
 
   getData() {
@@ -37,7 +36,13 @@ class EditGenreFormController extends EditItem {
   }
 
   sendData() {
-    return genresService.put(this.props.id, this.state.data);
+    const data = parser.parseDataForMultipart(
+      this.state.data,
+      ["picture"],
+      ["pictureURL"]
+    );
+
+    return genresService.put(this.props.id, data);
   }
 
   deleteData() {
@@ -48,16 +53,14 @@ class EditGenreFormController extends EditItem {
     return (
       <React.Fragment>
         <form onSubmit={this.prepareFormSubmission}>
-          {this.renderInput("title", "Title")}
+          {this.renderFilePicker("picture", "Cover Picture")}
+          {this.renderTextInput("title", "Title")}
           {this.renderTextarea("description", "Description")}
-          <Button label="Update Genre" block={true} />
+          {this.renderButton("Update Genre", true)}
         </form>
-        <Button
-          label="Delete Genre"
-          variant="danger"
-          block={true}
-          onClick={() => this.handleDelete()}
-        />
+        {this.renderButton("Delete Genre", true, "danger", () =>
+          this.handleDelete()
+        )}
       </React.Fragment>
     );
   }

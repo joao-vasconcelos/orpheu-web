@@ -1,13 +1,14 @@
 import React from "react";
-import CreateItem from "../../../common/forms/CreateItem";
 import Joi from "joi-browser";
+import parser from "../../../../utils/parser";
+import CreateItem from "../../../common/forms/CreateItem";
 import authorsService from "../../../../services/authorsService";
-import Button from "../../../common/inputs/Button";
 
 class CreateAuthorFormController extends CreateItem {
   state = {
     type: "author",
     data: {
+      picture: null,
       name: "",
       nationality: "",
       birthdate: "",
@@ -15,9 +16,9 @@ class CreateAuthorFormController extends CreateItem {
       biography: ""
     },
     schema: {
-      coverURL: Joi.string()
-        .max(255)
-        .label("CoverURL"),
+      picture: Joi.any()
+        .not(null)
+        .label("Author Picture"),
       name: Joi.string()
         .min(2)
         .max(50)
@@ -43,25 +44,25 @@ class CreateAuthorFormController extends CreateItem {
         .allow("")
         .label("Biography")
     },
-    validationErrors: {},
-    error: null,
-    success: null
+    validationErrors: {}
   };
 
   sendData() {
-    return authorsService.post(this.state.data);
+    const data = parser.parseDataForMultipart(this.state.data, ["picture"]);
+    return authorsService.post(data);
   }
 
   renderForm() {
     return (
       <React.Fragment>
         <form onSubmit={this.prepareFormSubmission}>
-          {this.renderInput("name", "Author's Name")}
-          {this.renderInput("nationality", "Author's Nationality")}
-          {this.renderInput("birthdate", "Author's Birth date", "", "date")}
-          {this.renderInput("deathdate", "Author's Death date", "", "date")}
+          {this.renderFilePicker("picture", "Author Picture")}
+          {this.renderTextInput("name", "Author's Name")}
+          {this.renderTextInput("nationality", "Author's Nationality")}
+          {this.renderDatePicker("birthdate", "Author's Birth date")}
+          {this.renderDatePicker("deathdate", "Author's Death date")}
           {this.renderTextarea("biography", "Author's Biography")}
-          <Button label="Create Author" block={true} />
+          {this.renderButton("Create Author", true, "primary", null)}
         </form>
       </React.Fragment>
     );

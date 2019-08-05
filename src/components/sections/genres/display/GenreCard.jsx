@@ -6,7 +6,7 @@ function GenreCard({ item }) {
   return (
     <LinkContainer to={"/genres/" + item._id} style={{ cursor: "pointer" }}>
       <Card className="sh-light grow animate bg-light">
-        <Card.Img variant="top" src={item.coverURL} />
+        <Card.Img variant="top" src={item.pictureURL} />
         <Card.Body style={{ backgroundColor: item.bgColor }}>
           <Card.Title
             className="text-center"

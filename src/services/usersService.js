@@ -1,7 +1,7 @@
 import http from "./httpService";
 import { apiURL } from "../config/settings.json";
 
-const apiEndpoint = apiURL + "/users";
+const apiEndpoint = apiURL + "users";
 
 async function createNew(user) {
   return http.post(apiEndpoint, {

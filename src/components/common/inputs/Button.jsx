@@ -13,6 +13,7 @@ class Button extends React.Component {
 
   componentWillMount() {
     this.setState(this.props);
+    if (!this.props.variant) this.setState({ variant: "primary" });
     if (this.props.block) this.setState({ block: "block" });
   }
 
@@ -28,9 +29,9 @@ class Button extends React.Component {
       </button>
     );
 
-    if (link !== "") {
+    if (link !== "")
       return <LinkContainer to={this.state.link}>{button}</LinkContainer>;
-    } else return button;
+    else return button;
   }
 }
 

@@ -1,17 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Row, Col } from "react-bootstrap";
+import EditThisToolbar from "../../../nav/EditThisToolbar";
 
 const GenreDetails = ({ item }) => {
   return (
     <React.Fragment>
-      <Row className="mt-5">
-        <Col>
-          <Link to={"/genres/edit/" + item._id}>
-            <button className="btn btn-light btn-sm">Edit genre</button>
-          </Link>
-        </Col>
-      </Row>
+      <EditThisToolbar type="genre" link={"/genres/edit/" + item._id} />
       <Row className="pt-3 my-3">
         <Col>
           <h1>{item.title} books</h1>

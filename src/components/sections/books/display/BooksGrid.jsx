@@ -3,12 +3,12 @@ import React from "react";
 import { Col, Row } from "react-bootstrap";
 import BookCard from "./BookCard";
 
-const BooksGrid = ({ books }) => {
+const BooksGrid = ({ items }) => {
   return (
     <Row>
-      {books.map(book => (
-        <Col key={book._id} md={4} className="mb-4">
-          <BookCard item={book} />
+      {items.map(item => (
+        <Col key={item._id} md={3} className="mb-4">
+          <BookCard item={item} />
         </Col>
       ))}
     </Row>

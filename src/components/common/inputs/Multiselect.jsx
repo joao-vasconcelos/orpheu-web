@@ -8,21 +8,22 @@ class Multiselect extends Component {
   };
 
   render() {
+    const { name, label, keys, options, defaultValue, error } = this.props;
     return (
       <div className="form-group">
-        <label htmlFor={this.props.name}>{this.props.label}</label>
+        <label htmlFor={name}>{label}</label>
         <Select
           isMulti
-          onChange={newValue =>
-            this.handleMultiselectChange("authors", newValue)
-          }
-          getOptionValue={opt => opt._id}
-          getOptionLabel={opt => opt.name}
-          options={this.props.options}
+          isClearable
+          onChange={newValue => this.handleMultiselectChange(name, newValue)}
+          getOptionValue={opt => opt[keys.value]}
+          getOptionLabel={opt => opt[keys.label]}
+          options={options}
+          defaultValue={defaultValue}
         />
-        {this.props.error && (
+        {error && (
           <div className="text-danger mt-2" style={{ fontSize: 15 }}>
-            {this.props.error}
+            {error}
           </div>
         )}
       </div>

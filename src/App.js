@@ -21,14 +21,15 @@ import Signup from "./components/sections/auth/signup/Signup";
 import Login from "./components/sections/auth/login/Login";
 import Logout from "./components/sections/auth/logout/Logout";
 
-import Books from "./components/sections/books/Books";
+import CreateBook from "./components/sections/books/create/CreateBook";
+import EditBook from "./components/sections/books/edit/EditBook";
 import ViewBook from "./components/sections/books/view/ViewBook";
-import CreateBook from "./components/sections/books/edit/CreateBook";
+import DisplayBooks from "./components/sections/books/display/DisplayBooks";
 
-import Authors from "./components/sections/authors/display/DisplayAuthors";
-import ViewAuthor from "./components/sections/authors/view/ViewAuthor";
 import CreateAuthor from "./components/sections/authors/create/CreateAuthor";
 import EditAuthor from "./components/sections/authors/edit/EditAuthor";
+import ViewAuthor from "./components/sections/authors/view/ViewAuthor";
+import DisplayAuthors from "./components/sections/authors/display/DisplayAuthors";
 
 import CreateGenre from "./components/sections/genres/create/CreateGenre";
 import EditGenre from "./components/sections/genres/edit/EditGenre";
@@ -62,23 +63,25 @@ class App extends Component {
           {!userIsLoggedIn && <Route path="/login" component={Login} />}
           <Route path="/logout" component={Logout} />
 
-          {/* AUTHENTICATED */}
-          {/* <Route path="/books/edit/:id" component={EditBook} /> */}
+          {/* Books */}
+          <Route path="/books/edit/:id" component={EditBook} />
           <Route path="/books/new" component={CreateBook} />
           <Route path="/books/:id" component={ViewBook} />
-          <Route path="/books" component={Books} />
+          <Route path="/books" component={DisplayBooks} />
 
+          {/* Authors */}
           <Route path="/authors/edit/:id" component={EditAuthor} />
           <Route path="/authors/new" component={CreateAuthor} />
           <Route path="/authors/:id" component={ViewAuthor} />
-          <Route path="/authors" component={Authors} />
+          <Route path="/authors" component={DisplayAuthors} />
 
+          {/* Genres */}
           <Route path="/genres/edit/:id" component={EditGenre} />
           <Route path="/genres/new" component={CreateGenre} />
           <Route path="/genres/:id" component={ViewGenre} />
           <Route path="/genres" component={DisplayGenres} />
 
-          {/* OTHER UTILITIES ALWAYS AVAILABLE */}
+          {/* UTILITIES */}
           <Route path="/not-found" component={NotFound} />
           <Redirect exact from="/" to="/books" />
           <Redirect to="/not-found" />
