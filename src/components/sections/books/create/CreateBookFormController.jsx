@@ -96,7 +96,7 @@ class CreateBookFormController extends CreateItem {
         .allow("")
         .label("Condition"),
       sinopse: Joi.string()
-        .max(500)
+        .max(1500)
         .allow("")
         .label("Sinopse"),
       price: Joi.number()

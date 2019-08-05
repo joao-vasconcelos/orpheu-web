@@ -9,11 +9,7 @@ const AuthorDetails = ({ item }) => {
       <EditThisToolbar type="author" link={"/authors/edit/" + item._id} />
       <Row className="pt-3 my-3">
         <Col md={5} className="text-center">
-          <Image
-            rounded
-            className="w-100 mb-4"
-            src="https://picsum.photos/100/100"
-          />
+          <Image rounded className="w-100 mb-4" src={item.pictureURL} />
         </Col>
         <Col>
           <Row>
